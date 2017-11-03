@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynPractice", "RoslynPractice\RoslynPractice.csproj", "{E638F1C5-53CE-427A-AA9A-E378F03167EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp6CastingAnalyzer", "CSharp6CastingAnalyzer\CSharp6CastingAnalyzer\CSharp6CastingAnalyzer.csproj", "{AD6676EA-7789-4E29-B16B-D4510A1CD4C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp6CastingAnalyzer.Test", "CSharp6CastingAnalyzer\CSharp6CastingAnalyzer.Test\CSharp6CastingAnalyzer.Test.csproj", "{8CC548AB-0954-40B9-B57D-C4A555E38C23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp6CastingAnalyzer.Vsix", "CSharp6CastingAnalyzer\CSharp6CastingAnalyzer.Vsix\CSharp6CastingAnalyzer.Vsix.csproj", "{27560EA1-AE72-4EDD-9FBD-97E4A3485014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCastingAnalyzer", "BetterCastingAnalyzer\BetterCastingAnalyzer\BetterCastingAnalyzer.csproj", "{643165B7-82A5-449F-873C-8095CFBB93F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCastingAnalyzer.Test", "BetterCastingAnalyzer\BetterCastingAnalyzer.Test\BetterCastingAnalyzer.Test.csproj", "{F35E73B5-82D6-427F-923B-D70B70C908A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCastingAnalyzer.Vsix", "BetterCastingAnalyzer\BetterCastingAnalyzer.Vsix\BetterCastingAnalyzer.Vsix.csproj", "{7F15C92F-A443-4A50-96DB-6F71728542A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E638F1C5-53CE-427A-AA9A-E378F03167EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E638F1C5-53CE-427A-AA9A-E378F03167EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E638F1C5-53CE-427A-AA9A-E378F03167EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E638F1C5-53CE-427A-AA9A-E378F03167EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD6676EA-7789-4E29-B16B-D4510A1CD4C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6676EA-7789-4E29-B16B-D4510A1CD4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6676EA-7789-4E29-B16B-D4510A1CD4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6676EA-7789-4E29-B16B-D4510A1CD4C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CC548AB-0954-40B9-B57D-C4A555E38C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CC548AB-0954-40B9-B57D-C4A555E38C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CC548AB-0954-40B9-B57D-C4A555E38C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CC548AB-0954-40B9-B57D-C4A555E38C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27560EA1-AE72-4EDD-9FBD-97E4A3485014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27560EA1-AE72-4EDD-9FBD-97E4A3485014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27560EA1-AE72-4EDD-9FBD-97E4A3485014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27560EA1-AE72-4EDD-9FBD-97E4A3485014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{643165B7-82A5-449F-873C-8095CFBB93F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643165B7-82A5-449F-873C-8095CFBB93F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643165B7-82A5-449F-873C-8095CFBB93F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643165B7-82A5-449F-873C-8095CFBB93F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35E73B5-82D6-427F-923B-D70B70C908A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35E73B5-82D6-427F-923B-D70B70C908A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35E73B5-82D6-427F-923B-D70B70C908A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35E73B5-82D6-427F-923B-D70B70C908A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1337BB72-FC72-4BF7-B75E-55B627AD82C6}
+	EndGlobalSection
+EndGlobal

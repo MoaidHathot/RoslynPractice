@@ -36,37 +36,46 @@ namespace BetterCastingAnalyzer.Test
     namespace ConsoleApplication1
     {
         class TypeName
-        {   
+        {               
+            void TestMethod()
+            {
+                object foo = Activator.CreateInstance(typeof(string));
+
+                if (foo is string)
+                {
+                    var length = ((string)foo).Length;
+                }
+            }
         }
     }";
             var expected = new DiagnosticResult
             {
                 Id = "BetterCastingAnalyzer",
-                Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+                Message = $"Type name 'foo' can be casted using the 'as statement'",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 11, 15)
+                            new DiagnosticResultLocation("Test0.cs", 17, 21)
                         }
             };
 
             VerifyCSharpDiagnostic(test, expected);
 
-            var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
+    //        var fixtest = @"
+    //using System;
+    //using System.Collections.Generic;
+    //using System.Linq;
+    //using System.Text;
+    //using System.Threading.Tasks;
+    //using System.Diagnostics;
 
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
-        }
-    }";
-            VerifyCSharpFix(test, fixtest);
+    //namespace ConsoleApplication1
+    //{
+    //    class TYPENAME
+    //    {   
+    //    }
+    //}";
+    //        VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()

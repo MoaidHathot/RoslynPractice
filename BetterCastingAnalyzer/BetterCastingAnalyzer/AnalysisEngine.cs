@@ -11,19 +11,34 @@ namespace BetterCastingAnalyzer
 {
     internal static class AnalysisEngine
     {
-        public static (IdentifierNameSyntax identifier, IfStatementSyntax ifStatement) FindIdentifierBeingCastedTwice(SyntaxNode node)
+        public static (IdentifierNameSyntax identifier, IfStatementSyntax ifStatement, PredefinedTypeSyntax predefinedType) FindIdentifierBeingCastedTwice(SyntaxNode node)
         {
             if (node is IfStatementSyntax ifStatement && ifStatement.Condition.IsKind(SyntaxKind.IsExpression))
             {
                 var castedIdentifier = ifStatement.Condition.DescendantNodes().OfType<IdentifierNameSyntax>().First();
 
-                if (ifStatement.Statement.DescendantNodes().Any(expression => expression.IsKind(SyntaxKind.CastExpression) && expression.DescendantNodes().OfType<IdentifierNameSyntax>().Any(nameSyntax => nameSyntax.Identifier.ValueText.Equals(castedIdentifier.Identifier.ValueText))))
-                {
-                    return (castedIdentifier, ifStatement);
-                }
+                //var list = new List<IdentifierNameSyntax>();
+
+                //foreach (var castedIdentifier in ifStatement.Condition.DescendantNodes().OfType<IdentifierNameSyntax>())
+                //{
+                    var foundCastedVariables = ifStatement.Statement
+                        .DescendantNodes()
+                        .Where(expression => expression.IsKind(SyntaxKind.CastExpression))
+                        .SelectMany(expression => expression
+                                                    .DescendantNodes()
+                                                    .OfType<IdentifierNameSyntax>()
+                                                    .Where(nameSyntax => nameSyntax.Identifier.ValueText.Equals(castedIdentifier.Identifier.ValueText)));
+
+                    var variableFound = foundCastedVariables.FirstOrDefault();
+               
+                    if (null != variableFound)
+                    {
+                        return (variableFound, ifStatement, (PredefinedTypeSyntax)((BinaryExpressionSyntax)ifStatement.Condition).Right);
+                    }
+                //}
             }
 
-            return (null, null);
+            return (null, null, null);
         }
     }
 }

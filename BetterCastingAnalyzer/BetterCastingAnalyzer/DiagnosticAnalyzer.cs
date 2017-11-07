@@ -41,12 +41,12 @@ namespace BetterCastingAnalyzer
 
             if (null != tuple.identifier)
             {
-                var diagnostic = Diagnostic.Create(Rule, tuple.ifStatement.GetLocation(), tuple.identifier.Identifier.ValueText);
+                var diagnostic = Diagnostic.Create(Rule, tuple.identifier.GetLocation(), tuple.identifier.Identifier.ValueText);
 
                 context.ReportDiagnostic(diagnostic);
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), "bla bla &&"));
+            //context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), tuple.identifier.Identifier.ValueText));
         }
 
         //private static void AnalyzeSymbol(SymbolAnalysisContext context)

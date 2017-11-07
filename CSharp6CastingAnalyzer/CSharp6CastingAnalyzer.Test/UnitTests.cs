@@ -37,12 +37,21 @@ namespace CSharp6CastingAnalyzer.Test
     {
         class TypeName
         {   
+            void TestMethod()
+            {
+                object foo = Activator.CreateInstance(typeof(string));
+
+                if (foo is string)
+                {
+                    var length = ((string)foo).Length;
+                }
+            }
         }
     }";
             var expected = new DiagnosticResult
             {
                 Id = "CSharp6CastingAnalyzer",
-                Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+                Message = $"Type name '{"TypeName"}' contains lowercase letters",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {

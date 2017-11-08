@@ -52,13 +52,16 @@ namespace PatternMatchingCastingAnalyzer
                 diagnostic);
         }
 
+        private Task<string> GenerateNewVariableName(Document document, IfStatementSyntax ifStatement, CancellationToken cancellationToken)
+            => Task.FromResult("baz");
+
         private async Task<Document> UseBetterCast(Document document, IfStatementSyntax ifStatement, CancellationToken cancellationToken)
         {
             var tuple = FindIdentifierBeingCastedTwice(ifStatement);
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
 
-            var newVariableName = "baz";
+            var newVariableName = await GenerateNewVariableName(document, ifStatement, cancellationToken);
 
             var oldMemberAccessList = tuple.identifiers
                 .Select(identifier => identifier.Ancestors().OfType<MemberAccessExpressionSyntax>().First())

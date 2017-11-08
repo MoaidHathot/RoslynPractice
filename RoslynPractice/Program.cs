@@ -23,8 +23,7 @@ namespace RoslynPractice
                 var ignored = foo.ToString();
 
                 var trimmed = ((string)foo).Trim();
-
-            }
+                }
 
 
             var foo2 = foo as string;

@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharp6CastingAnalyzer
 {
-    internal static class NullPropagationAnalysisEnginecs
+    internal static class NullPropagationAnalysisEngine
     {
         public static (IdentifierNameSyntax identifierChecked, IdentifierNameSyntax identifierUsed, Location location) FindIdentifierBeingCheckedforNull(SyntaxNode node)
         {

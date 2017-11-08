@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using static CSharp6CastingAnalyzer.NullPropagationAnalysisEnginecs;
+using static CSharp6CastingAnalyzer.NullPropagationAnalysisEngine;
 
 namespace CSharp6CastingAnalyzer
 {

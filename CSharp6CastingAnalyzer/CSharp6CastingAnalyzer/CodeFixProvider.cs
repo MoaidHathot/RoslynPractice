@@ -22,10 +22,7 @@ namespace CSharp6CastingAnalyzer
     {
         private const string Title = "Use Null Propagation";
 
-        public sealed override ImmutableArray<string> FixableDiagnosticIds
-        {
-            get { return ImmutableArray.Create(CSharp6CastingAnalyzerAnalyzer.DiagnosticId); }
-        }
+        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(CSharp6CastingAnalyzerAnalyzer.DiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {

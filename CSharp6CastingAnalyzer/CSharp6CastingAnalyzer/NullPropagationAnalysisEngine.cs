@@ -32,7 +32,6 @@ namespace CSharp6CastingAnalyzer
                         : null != rightIdentifierChecked && null != leftIdentifierUsed
                         ? (rightIdentifierChecked, leftIdentifierUsed, conditionExpression.GetLocation())
                         : (null, null, null);
-
             }
 
             return (null, null, null);
@@ -55,7 +54,6 @@ namespace CSharp6CastingAnalyzer
             }
 
             return null;
-
         }
     }
 }

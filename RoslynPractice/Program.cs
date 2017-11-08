@@ -12,7 +12,7 @@ namespace RoslynPractice
         {
         }
 
-        static void CastingTest()
+        void CastingTest()
         {
             object foo = Activator.CreateInstance(typeof(string));
 
@@ -23,15 +23,22 @@ namespace RoslynPractice
                 var ignored = foo.ToString();
 
                 var trimmed = ((string)foo).Trim();
-                }
-
-
-            var foo2 = foo as string;
-            if (foo2 != null)
+            }
+            
+            if (foo is string foo2)
             {
                 var length = foo2.Length;
             }
+        }
 
+        void NullPropagationTest()
+        {
+            var foo = "moaid";
+
+            if(foo != null && foo.Length > 30)
+            {
+                
+            }
         }
     }
 }

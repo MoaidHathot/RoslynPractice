@@ -7,14 +7,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using static BetterCastingAnalyzer.AnalysisEngine;
+using static PatternMatchingCastingAnalyzer.AnalysisEngine;
 
-namespace BetterCastingAnalyzer
+namespace PatternMatchingCastingAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class BetterCastingAnalyzerAnalyzer : DiagnosticAnalyzer
+    public class PatternMatchingCastingAnalyzerAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "BetterCastingAnalyzer";
+        public const string DiagnosticId = "PatternMatchingCastingAnalyzer";
 
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -31,7 +31,6 @@ namespace BetterCastingAnalyzer
         {
             // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
             // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
-
             context.RegisterSyntaxNodeAction(AnalyzeIfStatements, SyntaxKind.IfStatement);
         }
 

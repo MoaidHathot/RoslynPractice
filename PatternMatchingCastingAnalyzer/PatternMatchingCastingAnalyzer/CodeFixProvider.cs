@@ -5,27 +5,25 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Rename;
 using Microsoft.CodeAnalysis.Text;
-using static BetterCastingAnalyzer.AnalysisEngine;
+using static PatternMatchingCastingAnalyzer.AnalysisEngine;
 
-namespace BetterCastingAnalyzer
+namespace PatternMatchingCastingAnalyzer
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BetterCastingAnalyzerCodeFixProvider)), Shared]
-    public class BetterCastingAnalyzerCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(PatternMatchingCastingAnalyzerCodeFixProvider)), Shared]
+    public class PatternMatchingCastingAnalyzerCodeFixProvider : CodeFixProvider
     {
-        private const string Title = "Cast with 'as'";
+        private const string Title = "Use Pattern Matching";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(BetterCastingAnalyzerAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(PatternMatchingCastingAnalyzerAnalyzer.DiagnosticId); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
@@ -60,13 +58,15 @@ namespace BetterCastingAnalyzer
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
 
+            var newVariableName = "baz";
+
             var oldMemberAccessList = tuple.identifiers
                 .Select(identifier => identifier.Ancestors().OfType<MemberAccessExpressionSyntax>().First())
                 .Select(oldAccess =>
                     new
                     {
                         oldAccess,
-                        newAccess = SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName("baz"), oldAccess.Name)
+                        newAccess = SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName(newVariableName), oldAccess.Name)
                     }).ToArray();
 
             root = root.TrackNodes(new SyntaxNode[] { ifStatement }.Concat(oldMemberAccessList.Select(pair => pair.oldAccess)));
@@ -74,16 +74,9 @@ namespace BetterCastingAnalyzer
             root = oldMemberAccessList.Aggregate(root, (r, pair) => r.ReplaceNode(r.GetCurrentNode(pair.oldAccess), pair.newAccess));
 
             var oldIfStatement = root.GetCurrentNode(ifStatement);
-  
-            var localDeclarationStatement =
-                SyntaxFactory.ParseStatement($"var baz = {tuple.identifiers.First().Identifier.ValueText} as {tuple.predefinedType.Keyword.ValueText};")
-                    .WithLeadingTrivia(root.GetCurrentNode(ifStatement).GetLeadingTrivia());
 
-            root = root.InsertNodesBefore(oldIfStatement, new[] { localDeclarationStatement });
-            oldIfStatement = root.GetCurrentNode(ifStatement);
+            root = root.ReplaceNode(oldIfStatement.Condition, SyntaxFactory.ParseExpression($"{tuple.identifiers.First().Identifier.ValueText} is {tuple.predefinedType.Keyword.ValueText} {newVariableName}"));
 
-            root = root.ReplaceNode(oldIfStatement.Condition, SyntaxFactory.ParseExpression($"null != baz"));
- 
             return document.WithSyntaxRoot(root);
         }
     }

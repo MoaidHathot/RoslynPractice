@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynPractice", "RoslynPractice\RoslynPractice.csproj", "{E638F1C5-53CE-427A-AA9A-E378F03167EC}"
 EndProject
@@ -16,6 +16,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCastingAnalyzer.Test", "BetterCastingAnalyzer\BetterCastingAnalyzer.Test\BetterCastingAnalyzer.Test.csproj", "{F35E73B5-82D6-427F-923B-D70B70C908A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCastingAnalyzer.Vsix", "BetterCastingAnalyzer\BetterCastingAnalyzer.Vsix\BetterCastingAnalyzer.Vsix.csproj", "{7F15C92F-A443-4A50-96DB-6F71728542A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternMatchingCastingAnalyzer", "PatternMatchingCastingAnalyzer\PatternMatchingCastingAnalyzer\PatternMatchingCastingAnalyzer.csproj", "{D4DF0733-EEFB-45AF-9775-EC96D2130C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternMatchingCastingAnalyzer.Test", "PatternMatchingCastingAnalyzer\PatternMatchingCastingAnalyzer.Test\PatternMatchingCastingAnalyzer.Test.csproj", "{82B27C96-BF89-4DD6-B6C8-F0344B1478D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternMatchingCastingAnalyzer.Vsix", "PatternMatchingCastingAnalyzer\PatternMatchingCastingAnalyzer.Vsix\PatternMatchingCastingAnalyzer.Vsix.csproj", "{AFA2A627-0C17-4E89-BBD9-022501378DD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,18 @@ Global
 		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F15C92F-A443-4A50-96DB-6F71728542A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4DF0733-EEFB-45AF-9775-EC96D2130C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4DF0733-EEFB-45AF-9775-EC96D2130C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4DF0733-EEFB-45AF-9775-EC96D2130C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4DF0733-EEFB-45AF-9775-EC96D2130C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B27C96-BF89-4DD6-B6C8-F0344B1478D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B27C96-BF89-4DD6-B6C8-F0344B1478D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B27C96-BF89-4DD6-B6C8-F0344B1478D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B27C96-BF89-4DD6-B6C8-F0344B1478D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFA2A627-0C17-4E89-BBD9-022501378DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFA2A627-0C17-4E89-BBD9-022501378DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFA2A627-0C17-4E89-BBD9-022501378DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFA2A627-0C17-4E89-BBD9-022501378DD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

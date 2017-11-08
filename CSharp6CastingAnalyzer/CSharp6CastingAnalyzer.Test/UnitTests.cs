@@ -14,7 +14,7 @@ namespace CSharp6CastingAnalyzer.Test
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void TestMethod1()
+        public void NullPropagation_Empty_NothingHappens()
         {
             var test = @"";
 
@@ -23,7 +23,7 @@ namespace CSharp6CastingAnalyzer.Test
 
         //Diagnostic and CodeFix both triggered and checked for
         [TestMethod]
-        public void TestMethod2()
+        public void NullPropagation_StringLength_Success()
         {
             var test = @"
     using System;
@@ -39,11 +39,11 @@ namespace CSharp6CastingAnalyzer.Test
         {   
             void TestMethod()
             {
-                object foo = Activator.CreateInstance(typeof(string));
+                var foo = ""moaid"";
 
-                if (foo is string)
+                if (foo != null && foo.Length > 30)
                 {
-                    var length = ((string)foo).Length;
+
                 }
             }
         }
@@ -51,11 +51,11 @@ namespace CSharp6CastingAnalyzer.Test
             var expected = new DiagnosticResult
             {
                 Id = "CSharp6CastingAnalyzer",
-                Message = $"Type name '{"TypeName"}' contains lowercase letters",
+                Message = $"Safely use 'foo' with type propagation",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 11, 15)
+                            new DiagnosticResultLocation("Test0.cs", 17, 21)
                         }
             };
 
@@ -71,11 +71,50 @@ namespace CSharp6CastingAnalyzer.Test
 
     namespace ConsoleApplication1
     {
-        class TYPENAME
+        class TypeName
         {   
+            void TestMethod()
+            {
+                var foo = ""moaid"";
+            if (foo?.Length > 30)
+            {
+
+                }
+            }
         }
     }";
             VerifyCSharpFix(test, fixtest);
+        }
+
+        [TestMethod]
+        public void NullPropagation_NoCastingNeeded_NothingHappens()
+        {
+            var test = @"
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {   
+            void TestMethod()
+            {
+                var foo = ""moaid"";
+
+                if (foo.Length > 30)
+                {
+
+                }
+            }
+        }
+    }";
+           
+
+            VerifyCSharpDiagnostic(test);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()

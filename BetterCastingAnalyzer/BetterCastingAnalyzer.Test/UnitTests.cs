@@ -59,23 +59,32 @@ namespace BetterCastingAnalyzer.Test
                         }
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            //VerifyCSharpDiagnostic(test, expected);
 
-    //        var fixtest = @"
-    //using System;
-    //using System.Collections.Generic;
-    //using System.Linq;
-    //using System.Text;
-    //using System.Threading.Tasks;
-    //using System.Diagnostics;
+            var fixtest = @"
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
 
-    //namespace ConsoleApplication1
-    //{
-    //    class TYPENAME
-    //    {   
-    //    }
-    //}";
-    //        VerifyCSharpFix(test, fixtest);
+    namespace ConsoleApplication1
+    {
+        class TypeName
+        {               
+            void TestMethod()
+            {
+                object foo = Activator.CreateInstance(typeof(string));
+
+                if (foo is string)
+                {
+                    var length = ((string)foo).Length;
+                }
+            }
+        }
+    }";
+            VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()

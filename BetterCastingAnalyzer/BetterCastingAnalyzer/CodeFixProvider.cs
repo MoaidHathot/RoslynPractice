@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Rename;
 using Microsoft.CodeAnalysis.Text;
 using static BetterCastingAnalyzer.AnalysisEngine;
@@ -65,28 +66,27 @@ namespace BetterCastingAnalyzer
             //        variables: SyntaxFactory.SeparatedList(new[] {
             //            SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier("foo2"))})));
 
-            
-            var localDeclarationStatement =
-                SyntaxFactory.ParseStatement($"var baz = {tuple.identifier.Identifier.ValueText} as {tuple.predefinedType.Keyword.ValueText};").WithLeadingTrivia(ifStatement.GetLeadingTrivia());
-
-            root = root.ReplaceNode(ifStatement, SyntaxFactory.IfStatement(SyntaxFactory.ParseExpression($"null != baz"), ifStatement.Statement));
-
             var oldMemberAccessExpression = tuple.identifier.Ancestors().OfType<MemberAccessExpressionSyntax>().First();
             var newMemberAccessExpression =
                 SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName("baz"),
                     oldMemberAccessExpression.Name);
 
-            root = root.ReplaceNode(oldMemberAccessExpression, newMemberAccessExpression);
+            
+            root = root.TrackNodes(ifStatement, tuple.identifier, oldMemberAccessExpression, tuple.predefinedType);
+            root = root.ReplaceNode(root.GetCurrentNode(oldMemberAccessExpression), newMemberAccessExpression);
 
+            var oldIfStatement = root.GetCurrentNode(ifStatement);
+  
+            var localDeclarationStatement =
+                SyntaxFactory.ParseStatement($"var baz = {tuple.identifier.Identifier.ValueText} as {tuple.predefinedType.Keyword.ValueText};")
+                    .WithLeadingTrivia(root.GetCurrentNode(ifStatement).GetLeadingTrivia());
 
-            //tuple = FindIdentifierBeingCastedTwice(tuple.ifStatement);
+            root = root.InsertNodesBefore(oldIfStatement, new[] { localDeclarationStatement });
+            oldIfStatement = root.GetCurrentNode(ifStatement);
 
-            root = root.InsertNodesBefore(ifStatement, new[] { localDeclarationStatement });
-
+            root = root.ReplaceNode(oldIfStatement.Condition, SyntaxFactory.ParseExpression($"null != baz"));
+ 
             return document.WithSyntaxRoot(root);
-            //var declarationStatement = SyntaxFactory.LocalDeclarationStatement(, )
-
-            //return document;
         }
     }
 }

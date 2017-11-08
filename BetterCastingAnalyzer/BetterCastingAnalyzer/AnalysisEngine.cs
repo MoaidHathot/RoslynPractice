@@ -11,7 +11,7 @@ namespace BetterCastingAnalyzer
 {
     internal static class AnalysisEngine
     {
-        public static (IdentifierNameSyntax identifier, IfStatementSyntax ifStatement, PredefinedTypeSyntax predefinedType) FindIdentifierBeingCastedTwice(SyntaxNode node)
+        public static (IfStatementSyntax ifStatement, PredefinedTypeSyntax predefinedType, List<IdentifierNameSyntax> identifiers) FindIdentifierBeingCastedTwice(SyntaxNode node)
         {
             if (node is IfStatementSyntax ifStatement && ifStatement.Condition.IsKind(SyntaxKind.IsExpression))
             {
@@ -27,13 +27,14 @@ namespace BetterCastingAnalyzer
                         .SelectMany(expression => expression
                                                     .DescendantNodes()
                                                     .OfType<IdentifierNameSyntax>()
-                                                    .Where(nameSyntax => nameSyntax.Identifier.ValueText.Equals(castedIdentifier.Identifier.ValueText)));
+                                                    .Where(nameSyntax => nameSyntax.Identifier.ValueText.Equals(castedIdentifier.Identifier.ValueText)))
+                        .ToList();
 
-                    var variableFound = foundCastedVariables.FirstOrDefault();
-               
-                    if (null != variableFound)
+                //var variableFound = foundCastedVariables.FirstOrDefault();
+
+                if (0 < foundCastedVariables.Count)
                     {
-                        return (variableFound, ifStatement, (PredefinedTypeSyntax)((BinaryExpressionSyntax)ifStatement.Condition).Right);
+                        return (ifStatement, (PredefinedTypeSyntax)((BinaryExpressionSyntax)ifStatement.Condition).Right, foundCastedVariables);
                     }
                 //}
             }

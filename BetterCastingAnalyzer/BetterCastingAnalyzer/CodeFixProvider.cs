@@ -21,7 +21,7 @@ namespace BetterCastingAnalyzer
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(BetterCastingAnalyzerCodeFixProvider)), Shared]
     public class BetterCastingAnalyzerCodeFixProvider : CodeFixProvider
     {
-        private const string title = "Make uppercase";
+        private const string Title = "Make uppercase";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
@@ -48,9 +48,9 @@ namespace BetterCastingAnalyzer
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
                 CodeAction.Create(
-                    title: title,
+                    title: Title,
                     createChangedDocument: c => UseBetterCast(context.Document, declaration, c),
-                    equivalenceKey: title),
+                    equivalenceKey: Title),
                 diagnostic);
         }
 
@@ -60,25 +60,23 @@ namespace BetterCastingAnalyzer
 
             var root = await document.GetSyntaxRootAsync(cancellationToken);
 
-            //var localDeclarationStatement = SyntaxFactory.LocalDeclarationStatement(
-            //    declaration: SyntaxFactory.VariableDeclaration(
-            //        type: SyntaxFactory.IdentifierName(SyntaxFactory.Token(SyntaxKind.TypeVarKeyword)),
-            //        variables: SyntaxFactory.SeparatedList(new[] {
-            //            SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier("foo2"))})));
+            var oldMemberAccessList = tuple.identifiers
+                .Select(identifier => identifier.Ancestors().OfType<MemberAccessExpressionSyntax>().First())
+                .Select(oldAccess =>
+                    new
+                    {
+                        oldAccess,
+                        newAccess = SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName("baz"), oldAccess.Name)
+                    }).ToArray();
 
-            var oldMemberAccessExpression = tuple.identifier.Ancestors().OfType<MemberAccessExpressionSyntax>().First();
-            var newMemberAccessExpression =
-                SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName("baz"),
-                    oldMemberAccessExpression.Name);
+            root = root.TrackNodes(new SyntaxNode[] { ifStatement }.Concat(oldMemberAccessList.Select(pair => pair.oldAccess)));
 
-            
-            root = root.TrackNodes(ifStatement, tuple.identifier, oldMemberAccessExpression, tuple.predefinedType);
-            root = root.ReplaceNode(root.GetCurrentNode(oldMemberAccessExpression), newMemberAccessExpression);
+            root = oldMemberAccessList.Aggregate(root, (r, pair) => r.ReplaceNode(r.GetCurrentNode(pair.oldAccess), pair.newAccess));
 
             var oldIfStatement = root.GetCurrentNode(ifStatement);
   
             var localDeclarationStatement =
-                SyntaxFactory.ParseStatement($"var baz = {tuple.identifier.Identifier.ValueText} as {tuple.predefinedType.Keyword.ValueText};")
+                SyntaxFactory.ParseStatement($"var baz = {tuple.identifiers.First().Identifier.ValueText} as {tuple.predefinedType.Keyword.ValueText};")
                     .WithLeadingTrivia(root.GetCurrentNode(ifStatement).GetLeadingTrivia());
 
             root = root.InsertNodesBefore(oldIfStatement, new[] { localDeclarationStatement });

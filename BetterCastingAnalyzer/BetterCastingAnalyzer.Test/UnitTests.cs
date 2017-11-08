@@ -44,6 +44,10 @@ namespace BetterCastingAnalyzer.Test
                 if (foo is string)
                 {
                     var length = ((string)foo).Length;
+
+                    var ignored = foo.ToString();
+
+                    var trimmed = ((string)foo).Trim();
                 }
             }
         }
@@ -80,6 +84,10 @@ namespace BetterCastingAnalyzer.Test
                 if (foo is string)
                 {
                     var length = ((string)foo).Length;
+
+                    var ignored = foo.ToString();
+
+                    var trimmed = ((string)foo).Trim();
                 }
             }
         }

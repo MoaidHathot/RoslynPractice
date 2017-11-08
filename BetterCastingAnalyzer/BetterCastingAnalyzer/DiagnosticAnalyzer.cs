@@ -39,11 +39,17 @@ namespace BetterCastingAnalyzer
         {
             var tuple = FindIdentifierBeingCastedTwice(context.Node);
 
-            if (null != tuple.identifier)
+            if (null != tuple.identifiers)
             {
-                var diagnostic = Diagnostic.Create(Rule, tuple.identifier.GetLocation(), tuple.identifier.Identifier.ValueText);
+                foreach (var identifier in tuple.identifiers)
+                {
+                    var diagnostic = Diagnostic.Create(Rule, identifier.GetLocation(), identifier.Identifier.ValueText);
 
-                context.ReportDiagnostic(diagnostic);
+                    context.ReportDiagnostic(diagnostic);
+                }
+                //var diagnostic = Diagnostic.Create(Rule, tuple.identifier.GetLocation(), tuple.identifier.Identifier.ValueText);
+
+                //context.ReportDiagnostic(diagnostic);
             }
 
             //context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation(), tuple.identifier.Identifier.ValueText));
